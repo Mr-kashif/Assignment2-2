@@ -2,42 +2,41 @@ version: '3.8'
 
 services:
   # Backend Server
-  social-media-server-build:
-    image: node:18-alpine
-    container_name: social-media-server-build
+  server:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    container_name: social-media-server
     restart: unless-stopped
-    working_dir: /app
     ports:
-      - "4001:4000"
+      - "4000:4000"
     environment:
       - NODE_ENV=production
       - MONGO_DB=mongodb+srv://kashiweb:R4GMyRfTczIkrbRK@socialwebapp.83uevtg.mongodb.net/?appName=socialwebapp
       - PORT=4000
       - JWT_KEY=dukhil9p8804ippo&%4%
     volumes:
-      - ./Server:/app
-    command: sh -c "npm install && npm start"
+      - ./Server/public:/app/public
     networks:
       - social-media-network
 
   # Frontend Client
-  social-media-client-build:
-    image: node:18-alpine
-    container_name: social-media-client-build
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: social-media-client
     restart: unless-stopped
-    working_dir: /app
     ports:
-      - "81:3000"
-    environment:
-      - CI=true
+      - "80:80"
     depends_on:
-      - social-media-server-build
-    volumes:
-      - ./client:/app
-    command: sh -c "npm install && npm start"
+      - server
     networks:
       - social-media-network
 
 networks:
   social-media-network:
     driver: bridge
+
+volumes:
+  server_uploads:
