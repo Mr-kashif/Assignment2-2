@@ -12,6 +12,10 @@ import UploadRoute from './Routes/UploadRoute.js';
 // Routes
 const app = express();
 
+app.get('/', (req, res) => {
+    res.send("This is a Social Media App Backend");
+});
+
 
 // to serve images for public (public folder)
 app.use(express.static('public'));
