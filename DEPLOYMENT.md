@@ -6,6 +6,7 @@ This guide provides step-by-step instructions to deploy your Social Media Web Ap
 
 ## 📋 Prerequisites
 
+
 - AWS Account
 - GitHub Account
 - Basic knowledge of Linux commands
